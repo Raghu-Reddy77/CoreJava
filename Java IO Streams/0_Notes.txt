@@ -1,0 +1,243 @@
+A stream is a sequence of data. A program uses an input stream to read data 
+from a source, one item at a time:
+
+A program uses an output stream to write data to a destination, one item at time:
+
+FileOutputStream
+==============================================
+
+Example 1:
+------------
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+class Example {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fos = null; // Declare a FileOutputStream object
+        try {
+            fos = new FileOutputStream("file.txt"); // Create a new file "file.txt" for writing
+            String data = "Hello raghu"; // Data to be written to the file
+            fos.write(data.getBytes()); // Write the data to the file as bytes
+            fos.close(); // Close the file after writing
+        } catch (FileNotFoundException e) {
+            System.out.println(e); // Handle file not found exception
+        }
+    }
+}
+
+
+Example 2:
+-------------
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+class Example {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fos = null;
+        try {
+            // Create a FileOutputStream to write data to "file.txt"
+            fos = new FileOutputStream("file.txt");
+
+            // Data to be written to the file
+            String data = "Hello raghu how are you";
+
+            // Convert the data into bytes
+            byte b[] = data.getBytes();
+
+            // Iterate through each byte and write it to the file
+            for (byte x : b) {
+                fos.write(x);
+            }
+
+            // Close the FileOutputStream to ensure data is written
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // Handle the case where the file cannot be found
+            System.out.println(e);
+        }
+    }
+}
+
+Example 3:
+--------------
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+class Example {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fos = null;
+        try {
+            // Create a FileOutputStream to write data to a file named "file.txt"
+            fos = new FileOutputStream("file.txt");
+
+            // Prepare the data to be written to the file
+            String data = "Hello raghu how are you";
+            byte b[] = data.getBytes();
+
+            // Write a portion of the byte array to the file, starting from index 6
+            fos.write(b, 6, b.length - 6);
+
+            // Close the FileOutputStream to release resources
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // Handle the case where the file "file.txt" could not be found
+            System.out.println(e);
+        }
+    }
+}
+
+FileInputStream
+=============================================
+
+Example 1:
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+class Example {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = null; // Declare a FileInputStream object
+        
+        try {
+            fis = new FileInputStream("file.txt"); // Open the file "file.txt" for reading
+            
+            byte[] b = new byte[fis.available()]; // Create a byte array to hold file data
+            fis.read(b); // Read data from the file into the byte array
+            
+            String str = new String(b); // Convert the byte array to a String
+            System.out.println(str); // Print the contents of the file
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e); // Handle the case where the file is not found
+        } finally {
+            if (fis != null) {
+                fis.close(); // Close the FileInputStream in a finally block to ensure it's closed
+            }
+        }
+    }
+}
+
+Example 2:
+-------------------
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+class Example {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = null; // Declare a FileInputStream variable
+
+        try {
+            fis = new FileInputStream("file.txt"); // Open a FileInputStream for "file.txt"
+            int x; // Variable to store read bytes
+
+            // Read and print each byte until the end of the file is reached
+            do {
+                x = fis.read(); // Read a byte from the stream
+                if (x != -1)
+                    System.out.print((char) x); // Convert byte to char and print
+            } while (x != -1);
+
+            fis.close(); // Close the FileInputStream
+        } catch (FileNotFoundException e) {
+            System.out.println(e); // If the file is not found, print the exception
+        }
+    }
+}
+
+FileReader
+===============================
+
+Example 1:
+--------------
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+class Example {
+    public static void main(String[] args) {
+        try {
+            // Open a FileReader to read data from the file "file.txt"
+            FileReader fir = new FileReader("file.txt");
+            
+            int x; // Variable to store each character read from the file
+            while ((x = fir.read()) != -1) {
+                // Convert the integer to a character and print it
+                System.out.print((char) x);
+            }
+            
+            fir.close(); // Close the FileReader to release resources
+        } catch (FileNotFoundException e) {
+            // Handle the case where the file "file.txt" is not found
+            System.out.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            // Handle IOException, which could occur during file reading
+            System.out.println("IOException: " + e.getMessage());
+        }
+    }
+}
+
+Challenge:
+====================================================
+
+-> Copy data from 1 file to another file
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+public class CopyChallenge {
+    public static void main(String[] args) {
+
+        try (FileInputStream fis = new FileInputStream("source1.txt");
+                FileOutputStream fos = new FileOutputStream("source2.txt")) {
+
+            int data;
+
+            // Read data from "source1.txt" and write to "source2.txt"
+            while ((data = fis.read()) != -1) {
+                // Convert the character to uppercase and write to "source2.txt"
+                fos.write(Character.toUpperCase(data));
+            }
+        } catch (Exception e) {
+            // Print any exceptions that occur during the process
+            System.out.println(e);
+        }
+    }
+}
+
+
+-> Copying data from two files to a single file using SequenceInputStream
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.SequenceInputStream;
+
+public class Copy2 {
+    public static void main(String[] args) {
+        try (
+            // Open the input streams for source1.txt and source2.txt
+            FileInputStream fis = new FileInputStream("source1.txt");
+            FileInputStream fis1 = new FileInputStream("source2.txt");
+            
+            // Create a SequenceInputStream to read from both input streams sequentially
+            SequenceInputStream sis = new SequenceInputStream(fis, fis1);
+            
+            // Open the output stream for source3.txt
+            FileOutputStream fos = new FileOutputStream("source3.txt")
+        ) {
+            int data;
+            // Read data from the SequenceInputStream and write to source3.txt
+            while ((data = sis.read()) != -1) {
+                fos.write(data);
+            }
+        } catch (Exception e) {
+            // Print any exceptions that occur during the process
+            System.out.println(e);
+        }
+    }
+}
+
+
