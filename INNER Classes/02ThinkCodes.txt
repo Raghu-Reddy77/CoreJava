@@ -1,0 +1,82 @@
+Code 01:
+class Outer {
+    int number=10;
+    class Outer$Inner { 
+        int number=20;
+        class Outer$Inner$subInner {
+            public void display() {
+                System.out.println(Outer.this.number);
+            }
+        }
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        new Outer().new Outer$Inner().new Outer$Inner$subInner().display();
+
+    }
+}
+
+Output:
+10
+
+Code 02:
+class Outer {
+    void outerCall() {
+        Outer$Inner obj = new Outer$Inner();
+        obj.display();
+        obj.number = 90;
+        obj.display();
+    }
+
+    class Outer$Inner {
+        int number = 20;
+        void display(){
+            System.out.println(number);
+        }
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+           Outer obj=new Outer();
+           obj.outerCall();
+    }
+}
+
+Output:
+20
+90
+
+code 03 : this keyword inner classes
+
+class Outer {
+    String name = "Outer";
+    int number = 20;
+
+    class Outer$Inner {
+        int number = 200;
+
+        class Outer$Inner$sub {
+            int number=2000;
+            void display() {
+                System.out.println(number);
+                System.out.println(Outer$Inner.this.number);
+                System.out.println(Outer.this.number);
+            }
+        }
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        new Outer().new Outer$Inner().new Outer$Inner$sub().display();
+       
+    }
+}
+
+Output:
+2000
+200
+20
