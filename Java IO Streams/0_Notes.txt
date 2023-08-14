@@ -239,6 +239,7 @@ public class Copy2 {
         }
     }
 }
+<<<<<<< HEAD
 
 
 Piped Stream 
@@ -334,4 +335,5 @@ RandomAccessFile allows you to move the file pointer to any
 position within the file and read or write data from that position. 
 This makes it particularly useful when you need to perform both 
 reading and writing operations on a file in a non-sequential manner.
+
 
