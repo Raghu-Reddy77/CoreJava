@@ -12,13 +12,14 @@ class Sender extends Thread {
 
     public void run() {
         try {
-            Scanner scanner = new Scanner(System.in);
-            while (true) {
-                System.out.print("You: ");
-                String message = scanner.nextLine();
-                outStream.write(message.getBytes());
-                outStream.write('\n'); // Add newline character
-                outStream.flush();
+            try (Scanner scanner = new Scanner(System.in)) {
+                while (true) {
+                    System.out.print("You: ");
+                    String message = scanner.nextLine();
+                    outStream.write(message.getBytes());
+                    outStream.write('\n'); // Add newline character
+                    outStream.flush();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,10 +54,7 @@ public class ChatProgram {
     public static void main(String[] args) {
         try {
             PipedOutputStream senderToReceiver = new PipedOutputStream();
-            PipedOutputStream receiverToSender = new PipedOutputStream();
             PipedInputStream receiverInputStream = new PipedInputStream(senderToReceiver);
-            PipedInputStream senderInputStream = new PipedInputStream(receiverToSender);
-
             Sender senderThread = new Sender(senderToReceiver);
             Receiver receiverThread = new Receiver(receiverInputStream);
 
