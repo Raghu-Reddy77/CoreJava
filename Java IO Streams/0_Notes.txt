@@ -336,4 +336,98 @@ position within the file and read or write data from that position.
 This makes it particularly useful when you need to perform both 
 reading and writing operations on a file in a non-sequential manner.
 
+Example:
+--------
+import java.io.*;
 
+public class RandomAccessFileDemo {
+    public static void main(String[] args) throws Exception {
+        // Create a RandomAccessFile named "data.txt" in read-write mode
+        RandomAccessFile file = new RandomAccessFile("data.txt", "rw");
+
+        // Display the initial length of the file
+        System.out.println("Initial file length: " + file.length());
+
+        // Set the length of the file to 30 bytes
+        file.setLength(30);
+        System.out.println("Updated file length: " + file.length());
+
+        // Read and print the first character in the file (byte)
+        System.out.println("First character: " + (char) file.read());
+
+        // Skip 10 bytes from the current position
+        file.skipBytes(10);
+        System.out.println("Current file pointer position: " + file.getFilePointer());
+
+        // Read and print the next byte from the current position
+        int data = file.read();
+        System.out.println("Next byte: " + data + " (" + (char) data + ")");
+
+        // Close the file
+        file.close();
+    }
+}
+
+File Class 
+===================
+
+In Java, the File class is used to represent file and directory 
+paths. It provides methods to interact with the file system, 
+such as creating, deleting, renaming, and checking various 
+attributes of files and directories. The File class does not 
+represent the contents of the file; it's primarily used for 
+file and directory management.
+
+import java.io.File;
+
+public class FileOperationsDemo {
+    public static void main(String[] args) {
+        // Creating a File object
+        File file = new File("myfile.txt");
+
+        // Checking existence
+        if (file.exists()) {
+            System.out.println("File exists");
+        } else {
+            System.out.println("File does not exist");
+        }
+
+        // Checking if it's a directory
+        if (file.isDirectory()) {
+            System.out.println("It's a directory");
+        } else {
+            System.out.println("It's not a directory");
+        }
+
+        // Creating a directory
+        File directory = new File("mydir");
+        if (directory.mkdir()) {
+            System.out.println("Directory created successfully");
+        } else {
+            System.out.println("Failed to create directory");
+        }
+
+        // Listing files and directories
+        String[] fileList = directory.list();
+        System.out.println("Files and directories in 'mydir':");
+        for (String fileName : fileList) {
+            System.out.println(fileName);
+        }
+
+        // Deleting a file
+        if (file.delete()) {
+            System.out.println("File deleted successfully");
+        } else {
+            System.out.println("Failed to delete file");
+        }
+
+        // Renaming a file
+        File oldFile = new File("oldfile.txt");
+        File newFile = new File("newfile.txt");
+        if (oldFile.renameTo(newFile)) {
+            System.out.println("File renamed successfully");
+        } else {
+            System.out.println("Failed to rename file");
+        }
+    }
+}
