@@ -1,0 +1,7 @@
+Serialization: Serialization is the process of converting an object into a byte stream, 
+which can be easily saved to a file or transmitted over a network. It allows objects to 
+be persisted and reconstructed later.
+
+Serialization Mechanism: Java provides two main classes, 
+ObjectOutputStream and ObjectInputStream, to serialize and deserialize objects 
+respectively. These classes handle the conversion between objects and byte streams.
