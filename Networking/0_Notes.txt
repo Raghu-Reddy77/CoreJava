@@ -1,0 +1,9 @@
+Networking in Java involves creating communication between different devices over a network, such as sending and receiving data between computers. Java provides a rich set of classes and libraries for network programming. Let's start with the fundamentals:
+
+1. Sockets:
+--------------------------------------------------------------------
+In Java, network communication is based on the concept of sockets. A socket is an endpoint for sending or receiving data across a computer network. Java provides two types of sockets: client sockets and server sockets.
+
+Client Socket: A client socket is used to establish a connection to a server. You can create a client socket using the Socket class.
+
+Server Socket: A server socket listens for incoming connections from clients. You can create a server socket using the ServerSocket class.
