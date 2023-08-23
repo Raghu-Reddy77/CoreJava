@@ -7,3 +7,14 @@ In Java, network communication is based on the concept of sockets. A socket is a
 Client Socket: A client socket is used to establish a connection to a server. You can create a client socket using the Socket class.
 
 Server Socket: A server socket listens for incoming connections from clients. You can create a server socket using the ServerSocket class.
+
+steps to create client application
+----------------------------------------
+Step 1: Create Socket at Client Machine:
+To create socket class object we have to use
+java.net.Socket class constrcutor  
+public Socket(String server_IP_Addr,int server_Port_No)
+ex: socket s=new Socket("localhost",9999);
+
+step2: Get OutputStream from Socket: 
+
